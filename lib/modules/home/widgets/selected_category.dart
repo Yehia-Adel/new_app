@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/categories_model.dart';
 
 class SelectedCategory extends StatelessWidget {
-  const SelectedCategory({super.key});
+  CategoryModel selectedCategoryModel;
+
+  SelectedCategory({super.key, required this.selectedCategoryModel});
 
   @override
   Widget build(BuildContext context) {

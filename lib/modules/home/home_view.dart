@@ -5,27 +5,43 @@ import 'package:news_app/models/categories_model.dart';
 import 'package:news_app/modules/home/widgets/category_home_view.dart';
 import 'package:news_app/modules/home/widgets/selected_category.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   HomeView({super.key});
 
-  CategoriesModel? _selectedCategory;
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  CategoryModel? _selectedCategory;
+
+  List<CategoryModel> categoriesList = [
+    CategoryModel(
+        categoryID: "business",
+        categoryName: "Bussiness",
+        categoryImg: "assets/images/business.png"),
+    CategoryModel(
+        categoryID: "general",
+        categoryName: "General",
+        categoryImg: "assets/images/general.png"),
+    CategoryModel(
+        categoryID: "sports",
+        categoryName: "Sports",
+        categoryImg: "assets/images/sports.png"),
+    CategoryModel(
+        categoryID: "technology",
+        categoryName: "Technology",
+        categoryImg: "assets/images/technology.png"),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    List<CategoriesModel> categoriesList = [
-      CategoriesModel("business", "Bussiness", "assets/images/business.png"),
-      CategoriesModel("general", "General", "assets/images/general.png"),
-      CategoriesModel("sports", "Sports", "assets/images/sports.png"),
-      CategoriesModel(
-          "technology", "Technology", "assets/images/technology.png"),
-    ];
-
     var theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          _selectedCategory == null ? "Home" : _selectedCategory!.categoryName,
           style: theme.textTheme.titleLarge!
               .copyWith(color: ColorPalette.black, fontWeight: FontWeight.w500),
         ),
@@ -37,18 +53,18 @@ class HomeView extends StatelessWidget {
         ],
       ),
       drawer: Drawer(),
-      body: SingleChildScrollView(
-        child: _selectedCategory == null
-            ? CategoryHomeView(
-                categoriesList: categoriesList,
-                onCategoryClicked: onCategoryClicked,
-              )
-            : SelectedCategory(),
-      ),
+      body: _selectedCategory == null
+          ? CategoryHomeView(
+              categoriesList: categoriesList,
+              onCategoryClicked: onCategoryClicked,
+            )
+          : SelectedCategory(
+              selectedCategoryModel: _selectedCategory!,
+            ),
     );
   }
 
-  void onCategoryClicked(CategoriesModel selectedCategory) {
+  void onCategoryClicked(CategoryModel selectedCategory) {
     _selectedCategory = selectedCategory;
   }
 }

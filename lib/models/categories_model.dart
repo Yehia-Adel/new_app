@@ -1,7 +1,11 @@
-class CategoriesModel {
+class CategoryModel {
   final String categoryID;
   final String categoryName;
-  final String categoryImage;
+  final String categoryImg;
 
-  CategoriesModel(this.categoryID, this.categoryName, this.categoryImage);
+  CategoryModel({
+    required this.categoryID,
+    required this.categoryName,
+    required this.categoryImg,
+  });
 }
